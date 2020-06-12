@@ -1,6 +1,8 @@
 package de.syncup.tacstar.combat.abilities;
 
+import de.syncup.tacstar.combat.Combat;
 import de.syncup.tacstar.combat.resources.ResourceType;
+import de.syncup.tacstar.combat.units.Unit;
 
 public abstract class Ability {
 
@@ -43,10 +45,15 @@ public abstract class Ability {
         this.remainingCoolDown = 0;
     }
 
+    public void execute(Combat combat, Unit source, Unit target) {
+        this.setRemainingCoolDown(this.getCoolDown());
+    }
+
     public abstract String getTooltip();
     public abstract boolean canCrit();
     public abstract float getCriticalChance();
     public abstract float getCriticalEffect();
+    public abstract float getMissChance();
     public abstract boolean canMiss();
     public abstract boolean isReflectable();
     public abstract boolean canBeDodged();
@@ -55,6 +62,5 @@ public abstract class Ability {
     public abstract ResourceType getResourceType();
     public abstract int getResourceCost();
     public abstract TargetType getTargetType();
-    public abstract int getAbilityValue();
-    public abstract void execute();
+    public abstract int getAbilityValue(Unit source, Unit target);
 }

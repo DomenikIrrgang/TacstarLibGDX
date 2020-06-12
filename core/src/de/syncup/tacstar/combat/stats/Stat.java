@@ -47,7 +47,7 @@ public enum Stat {
     PARRY,
 
     /**
-     * Increases the chance for an attack missing on you.
+     * Increases the chance for an ability missing on you.
      */
     AVOIDANCE,
 
@@ -55,6 +55,11 @@ public enum Stat {
      * Increases the chance to not miss with abilities.
      */
     HIT,
+
+    /**
+     * Reduces the chance that abilities are dodged or parried.
+     */
+    EXPERTISE,
 
     /**
      * Reduces the chance for abilities to crit on you and increases your dodge and parry.
@@ -114,5 +119,13 @@ public enum Stat {
     RESOURCE_COST_MANA,
     RESOURCE_COST_HEALTH,
     RESOURCE_COST_RAGE,
-    RESOURCE_COST_ENERGY
+    RESOURCE_COST_ENERGY,
+
+    /**
+     * Effects ability value directly.
+     */
+    DAMAGE_DONE,
+    DAMAGE_TAKEN,
+    HEALING_DONE,
+    HEALING_TAKEN
 }

@@ -1,6 +1,8 @@
 package de.syncup.tacstar.combat.abilities;
 
+import de.syncup.tacstar.combat.Combat;
 import de.syncup.tacstar.combat.resources.ResourceType;
+import de.syncup.tacstar.combat.units.Unit;
 
 import java.lang.annotation.Target;
 
@@ -36,6 +38,11 @@ public class Fireball extends Ability {
     }
 
     @Override
+    public float getMissChance() {
+        return 0;
+    }
+
+    @Override
     public boolean isReflectable() {
         return true;
     }
@@ -47,7 +54,7 @@ public class Fireball extends Ability {
 
     @Override
     public boolean canBeParried() {
-        return true;
+        return false;
     }
 
     @Override
@@ -71,12 +78,12 @@ public class Fireball extends Ability {
     }
 
     @Override
-    public int getAbilityValue() {
+    public int getAbilityValue(Unit source, Unit target) {
         return 10;
     }
 
     @Override
-    public void execute() {
+    public void execute(Combat combat, Unit source, Unit target) {
         System.out.println("Fireball executed!");
     }
 }

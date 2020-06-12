@@ -2,15 +2,11 @@ package de.syncup.tacstar;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
-import com.badlogic.gdx.Graphics;
-import com.badlogic.gdx.controllers.Controllers;
-import de.syncup.tacstar.combat.stats.DefaultStatCalculator;
-import de.syncup.tacstar.combat.stats.Stat;
-import de.syncup.tacstar.combat.stats.StatCalculator;
+import de.syncup.tacstar.combat.AbilityCastResult;
+import de.syncup.tacstar.combat.Combat;
+import de.syncup.tacstar.combat.DefaultCombatCalculator;
+import de.syncup.tacstar.combat.abilities.Fireball;
 import de.syncup.tacstar.combat.units.Unit;
-import de.syncup.tacstar.eventbus.Event;
-import de.syncup.tacstar.eventbus.EventBus;
-import de.syncup.tacstar.eventbus.EventListener;
 import de.syncup.tacstar.input.Input;
 import de.syncup.tacstar.input.Keybinds;
 import de.syncup.tacstar.rendering.DefaultRenderer;
@@ -19,6 +15,8 @@ import de.syncup.tacstar.rendering.Scene;
 import de.syncup.tacstar.scenes.TitleScreen;
 
 import java.awt.*;
+import java.util.Arrays;
+import java.util.List;
 
 public class Tacstar extends ApplicationAdapter {
 
@@ -32,6 +30,15 @@ public class Tacstar extends ApplicationAdapter {
 		this.scene = new TitleScreen();
 		this.input = new Input(new Keybinds(this));
 		Gdx.input.setInputProcessor(this.input);
+
+		Unit suu = new Unit("Suu", 60);
+		Unit gamko = new Unit("Gamko", 60);
+		Combat combat = new Combat(new DefaultCombatCalculator(), Arrays.asList(suu), Arrays.asList(gamko));
+		combat.addCombatAction(new Fireball(), suu, gamko);
+		combat.addCombatAction(new Fireball(), gamko, suu);
+		for (AbilityCastResult result : combat.calculateRound()) {
+			System.out.println(result.abilityValue);
+		}
 	}
 
 	@Override

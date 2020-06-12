@@ -1,6 +1,6 @@
 package de.syncup.tacstar.combat.units;
 
-public enum UnitStatus {
+public enum UnitState {
     DEAD,
     INCAPACITATED,
     CONFUSED,

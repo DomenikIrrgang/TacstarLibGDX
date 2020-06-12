@@ -1,16 +1,18 @@
 package de.syncup.tacstar.combat.resources;
 
+import de.syncup.tacstar.combat.stats.StatCalculator;
+
 public abstract class Resource {
 
+    protected StatCalculator statCalculator;
     private int baseMaximumValue;
-    private int extraMaxiumValue;
     private int currentValue;
     private ResourceType type;
 
-    public Resource(ResourceType type, int baseMaximumValue) {
+    public Resource(StatCalculator statCalculator, ResourceType type, int baseMaximumValue) {
+        this.statCalculator = statCalculator;
         this.baseMaximumValue = baseMaximumValue;
-        this.extraMaxiumValue = 0;
-        this.currentValue = baseMaximumValue + this.extraMaxiumValue;
+        this.currentValue = this.getMaximumValue();
         this.type = type;
     }
 
@@ -19,15 +21,15 @@ public abstract class Resource {
     }
 
     public int getMaximumValue() {
-        return this.baseMaximumValue + this.extraMaxiumValue;
+        return this.baseMaximumValue;
     }
 
     public int setMaximumValue(int maximumValue) {
-        int difference = maximumValue - this.extraMaxiumValue;
+        int difference = maximumValue - this.getMaximumValue();
         if (difference != 0) {
-            this.extraMaxiumValue = (maximumValue > 0) ? maximumValue : 0;
+            this.baseMaximumValue = (maximumValue > 0) ? maximumValue : 0;
         }
-        return difference;
+        return difference - (currentValue - this.getMaximumValue());
     }
 
     public int setCurrentValue(int currentValue) {
@@ -36,7 +38,7 @@ public abstract class Resource {
             this.currentValue = (currentValue > 0) ? currentValue : 0;
             this.currentValue = (currentValue < this.getMaximumValue()) ? currentValue : this.getMaximumValue();
         }
-        return difference;
+        return difference - (currentValue - this.currentValue);
     }
 
     public int increaseCurrentValue(int change) {
@@ -53,6 +55,10 @@ public abstract class Resource {
 
     public int decreaseMaximumValue(int change) {
         return this.increaseMaximumValue(-change);
+    }
+
+    public ResourceType getType() {
+        return this.type;
     }
 
     public float getPercentage() {
